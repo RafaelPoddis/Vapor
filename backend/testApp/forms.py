@@ -12,12 +12,12 @@ class GamesForm(forms.ModelForm):
             'name' : 'Game Name',
             'price' : 'Price',
             'description' : 'Game Description',
-            'isAdults' :  'Is for Adults Only'
+            'isAdults' :  'Is for Adults Only?'
         }
 
         widgets = {
-            'name' : forms.TextInput(attrs={'placeholder': 'eg. Name'}),
-            'price' : forms.NumberInput(attrs={'placeholder': 'eg. 0,00'}),
-            'description' : forms.Textarea(attrs={'placeholder': 'eg. 2D game...'}),
+            'name' : forms.TextInput(attrs={'placeholder': 'The Game'}),
+            'price' : forms.NumberInput(attrs={'placeholder': '0,00'}),
+            'description' : forms.Textarea(attrs={'placeholder': 'This is a 2D game...'}),
             'isAdults' : forms.RadioSelect(choices=contentRating),
         }

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Add Your Game</h1>
+    <div class="form-group">
+        <form action="{% url 'vapor:show_url' %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Publish Game" class="btn btn-success">
+        </form>
+    </div>
+{% endblock %}

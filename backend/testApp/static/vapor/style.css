@@ -1,0 +1,56 @@
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 90px;
+    text-align: center;
+}
+
+body{
+    color: white;
+    background-image: linear-gradient(#183D50, #1B2838);
+    height: 100vh;
+}
+
+.navbarStyle {
+    background-color: #171D25;
+}
+
+form p {
+    display: flex;
+    flex-direction: column; /* Faz o label ficar acima do input */
+    margin-bottom: 10px; /* Dá um espaço entre os campos */
+}
+
+label {
+    font-weight: bold; /* Deixa os labels mais visíveis */
+    margin-bottom: 5px; /* Espaço entre label e input */
+}
+
+.form-group {
+    max-width: 400px;  /* Define um tamanho máximo para os campos */
+    margin-bottom: 10px; /* Adiciona um espaçamento entre os campos */
+}
+
+input, textarea, select {
+    width: 100%;  /* Faz com que os campos fiquem responsivos dentro do .form-group */
+    padding: 8px;  /* Adiciona um espaço interno para melhor aparência */
+    border: 1px solid #ccc; /* Adiciona uma borda leve */
+    border-radius: 5px; /* Arredonda as bordas */
+    box-sizing: border-box; /* Evita que padding aumente o tamanho total */
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+#jogos ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex
+}

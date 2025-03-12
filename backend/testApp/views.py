@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import GamesForm
 from .models import Games
 
+games = ['Game 1', 'Game 2', 'Game 3']
 # Create your views here.
 def gamesFormView(request):
     form = GamesForm()
@@ -10,14 +11,14 @@ def gamesFormView(request):
         if form.is_valid():
             form.save()
             return redirect("show_url")
-    template = 'index.html'
+    template = 'forms.html'
     context = {'form':form}
     return render(request, template, context)
 
 def showView(request):
     obj = Games.objects.all()
     template_name = 'show.html'
-    context = {'obj': obj}
+    context = {'games': games}
     return render(request, template_name, context)
 
 def updateView(request, f_name):
@@ -28,7 +29,7 @@ def updateView(request, f_name):
         if form.is_valid():
             form.save()
             return redirect('show_url')
-    template_name = 'index.html'
+    template_name = 'forms.html'
     context = {'form': form}
     return render(request, template_name, context)
 
@@ -40,3 +41,6 @@ def deleteView(request, f_name):
     template_name = 'index.html'
     context = {'obj': obj}
     return render(request, template_name, context)
+
+def index(request):
+    return render(request, "index.html")

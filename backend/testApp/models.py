@@ -7,4 +7,4 @@ class Games(models.Model):
     price = models.FloatField()
     description = models.TextField()
     isAdults = models.BooleanField()
-    # genres = ArrayField(models.CharField(max_length=20), size=5)
+    genres = ArrayField(models.CharField(max_length=20), size=5)
