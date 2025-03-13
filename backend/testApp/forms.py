@@ -6,7 +6,10 @@ class GamesForm(forms.ModelForm):
         model = Games
         fields = '__all__'
 
-        contentRating = {"0":"ForEveryone", "1":"AdultsOnly"}
+        isAdults = forms.ChoiceField(
+        choices=[(False, "For Everyone"), (True, "Adults Only")],
+        widget=forms.RadioSelect()
+        )
 
         labels = {
             'name' : 'Game Name',
@@ -19,5 +22,4 @@ class GamesForm(forms.ModelForm):
             'name' : forms.TextInput(attrs={'placeholder': 'The Game'}),
             'price' : forms.NumberInput(attrs={'placeholder': '0,00'}),
             'description' : forms.Textarea(attrs={'placeholder': 'This is a 2D game...'}),
-            'isAdults' : forms.RadioSelect(choices=contentRating),
         }

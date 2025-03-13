@@ -1,11 +1,33 @@
 {% extends "layout.html" %}
+
+{% block title %}
+<title>All Games</title>
+{% endblock %}
+
 {% block content %}
     <h1>All Games!</h1>
-    <div>
-        <ul>
-            {% for game in games %}
-                <li>{{ game }}</li>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Adults</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in obj %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.description}}</td>
+                <td>{{i.price}}</td>
+                <td>{{i.isAdults}}</td>
+                <td>
+                    <button class="btn btn-warning"><a href="{% url 'vapor:update' i.name %}">Update</a></button>&nbsp;&nbsp;
+                    <button class="btn btn-danger"><a href="{% url 'vapor:delete' i.name %}">Delete</a></button>
+                </td>
+            </tr>
             {% endfor %}
-        </ul>
-    </div>
+        </tbody>
+    </table>
 {% endblock %}

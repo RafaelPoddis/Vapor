@@ -7,4 +7,7 @@ class Games(models.Model):
     price = models.FloatField()
     description = models.TextField()
     isAdults = models.BooleanField()
-    genres = ArrayField(models.CharField(max_length=20), size=5)
+    # genres = ArrayField(models.CharField(max_length=20), size=5)
+
+    def __str__(self):
+        return f"{self.name}\n{self.price}\n{self.description}\n{self.isAdults}"

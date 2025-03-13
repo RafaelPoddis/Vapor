@@ -4,9 +4,9 @@
 {% block content %}
     <h1>Add Your Game</h1>
     <div class="form-group">
-        <form action="{% url 'vapor:show_url' %}" method="post">
+        <form method="post">
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ form.as_p }}
             <input type="submit" value="Publish Game" class="btn btn-success">
         </form>
     </div>
