@@ -1,47 +1,55 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from django.shortcuts import render, redirect
 from .forms import GamesForm
 from .models import Games
+from .serializer import GameSerializer
 
 # Create your views here.
-def gamesFormView(request):
-    form = GamesForm()
-    if request.method == 'POST':
-        form = GamesForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("vapor:show_url")
-        else:
-            print(form.errors)
-    template = 'forms.html'
-    context = {'form':form}
-    return render(request, template, context)
+class GameDetail(APIView):
+    def get(self, request, gameName):
+        try:
+            game = Games.objects.get(name=gameName)
+            serializer = GameSerializer(game)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Games.DoesNotExist:
+            return Response({"error": "Game not found"}, status=status.HTTP_404_NOT_FOUND)
 
-def showView(request):
-    obj = Games.objects.all()
-    template_name = 'show.html'
-    context = {'obj': obj}
-    return render(request, template_name, context)
+class GameView(APIView):
+    def post(self, request):
+        serializer = GameSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        games = Games.objects.all()
+        serializer = GameSerializer(games, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, gameName):
+        try:
+            game = Games.objects.get(name=gameName)
+            serializer = GameSerializer(game, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Games.DoesNotExist:
+            return Response({"error": "Game not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+    def delete(self, request, gameName, format=None):
+        try:
+            jogo = Games.objects.get(name=gameName)
+            jogo.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Games.DoesNotExist:
+            return Response({"error": "Jogo não encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
-def updateView(request, name):
-    obj = Games.objects.get(name=name)
-    form = GamesForm(instance=obj)
-    if request.method == 'POST':
-        form = GamesForm(request.POST, instance=obj)
-        if form.is_valid():
-            form.save()
-            return redirect("vapor:show_url")
-    template_name = 'forms.html'
-    context = {'form': form}
-    return render(request, template_name, context)
-
-def deleteView(request, name):
-    obj = Games.objects.get(name=name)
-    if request.method == 'POST':
-        obj.delete()
-        return redirect('vapor:show_url')
-    template_name = 'confirmation.html'
-    context = {'obj': obj}
-    return render(request, template_name, context)
+# class RatingsView(APIView):
+#     def post(self, request):
 
 def index(request):
     return render(request, "index.html")

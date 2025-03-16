@@ -1,5 +1,5 @@
 from django import forms
-from .models import Games
+from .models import *
 
 class GamesForm(forms.ModelForm):
     class Meta:
@@ -23,3 +23,8 @@ class GamesForm(forms.ModelForm):
             'price' : forms.NumberInput(attrs={'placeholder': '0,00'}),
             'description' : forms.Textarea(attrs={'placeholder': 'This is a 2D game...'}),
         }
+
+class RatingsForms(forms.ModelForm):
+    class Meta:
+        model = Ratings
+        fields = '__all__'

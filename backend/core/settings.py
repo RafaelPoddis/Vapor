@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'testApp',
+    'rest_framework',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',
@@ -54,6 +56,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+MEDIA_URL = "/media/"  # URL base para acessar arquivos no navegador
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # Diretório onde os arquivos serão salvos
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -69,6 +74,10 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 WSGI_APPLICATION = 'core.wsgi.application'
