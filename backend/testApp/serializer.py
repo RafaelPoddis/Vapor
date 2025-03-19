@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from .models import Games
+from .models import *
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Games
-        fields = '__all__'  # Inclui todos os campos do modelo
+        fields = '__all__'
+
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ratings
+        fields = '__all__'
