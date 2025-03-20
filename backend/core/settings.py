@@ -33,8 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'testApp',
-    'rest_framework',
     'crispy_forms',
+    'rest_framework',
+    'rest_framework.authtoken',
     'crispy_bootstrap5',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -77,6 +78,12 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # Adiciona autenticação por token
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Garante que apenas usuários autenticados acessem certas views
+    ],
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -99,6 +106,8 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = "testApp.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
