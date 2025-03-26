@@ -8,9 +8,23 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 class GameDetail(APIView):
+    def post(self, request, game_id):
+        game = get_object_or_404(Games, id=game_id)
+        user = request.user
+
+        if not user.is_authenticated:
+            return Response({"error": "User must be authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
+            
+        if UserGame.objects.filter(user=user, game=game).exists():
+            return Response({"message": "You already have this game!"})
+            
+        UserGame.objects.create(user=user, game=game)
+        return Response({"message": "Game purchased!"}, status=status.HTTP_201_CREATED)
+
     def get(self, request, game_id):
         try:
             game = Games.objects.get(id=game_id)
@@ -52,18 +66,6 @@ class GameView(APIView):
             return Response({"error": "Game Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
 class RatingsView(APIView):
-    # def post(self, request, game_id):
-    #     try:
-    #         game = Games.objects.get(id=game_id)
-    #     except Games.DoesNotExist:
-    #         return Response({"error: Game Not Found"}, status=status.HTTP_404_NOT_FOUND)
-        
-    #     request.data["game"] = game.id
-    #     serializer = RatingSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def post(self, request, game_id):
         game = get_object_or_404(Games, id=game_id)
         user = request.user
@@ -77,13 +79,6 @@ class RatingsView(APIView):
         serializer = RatingSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-
-            game.rating_count += 1
-            game.save()
-
-            user.rating_count += 1
-            user.save()
-
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -128,8 +123,19 @@ class UserRegisterView(APIView):
             return Response({"message": "Account created successfully!"}, status=status.HTTP_201_CREATED)
         except ValidationError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+class GetAllUsers(APIView):
+    def get(self, request):
+        try:
+            users = User.objects.all()
+            serializer = UserSerializer(users, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error: No registered users!"}, status=status.HTTP_404_NOT_FOUND)     
+
 class UserView(APIView):
+    parser_classes = (MultiPartParser, FormParser) # Suporte para arquivos
+
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -152,12 +158,18 @@ class UserView(APIView):
         
     def put(self, request, id):
         user = get_object_or_404(User, id=id)
+
+        # Verifica se o request contém um arquivo de imagem
+        avatar = request.FILES.get("avatar")
+        if avatar:
+            user.avatar = avatar
+        
         serializer = UserSerializer(user, data=request.data, partial=True)
 
         if serializer.is_valid():
             if "password" in request.data:
                 user.set_password(request.data["password"])
-                user.save()
+            user.save()
             serializer.save()
             return Response({"message: Account data changed successfully!"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -165,6 +177,34 @@ class UserView(APIView):
     def delete(self, request, id):
         user = get_object_or_404(User, id=id)
         user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class GenresViews(APIView):
+    def post(self, request):
+        serializer = GenreSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        genres = Genres.objects.all()
+        if not genres:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = GenreSerializer(genres, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, id):
+        genre = get_object_or_404(Genres, id=id)
+        serializer = GenreSerializer(genre, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Genre updated successfully"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id):
+        genre = get_object_or_404(Genres, id=id)
+        genre.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     
