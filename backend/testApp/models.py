@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
 
+def game_media_path(instance, filename):
+    return f"games/{instance.game.id}/media/{filename}"
 # Create your models here.
 class Genres(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -33,6 +35,16 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username} - Level: {self.level}"
+    
+class GameMedia(models.Model):
+    GAME_MEDIA_TYPES = [
+        ("image", "Image"),
+        ("video", "Video"),
+    ]
+
+    game = models.ForeignKey(Games, on_delete=models.CASCADE, related_name="media")
+    media_type = models.CharField(max_length=10, choices=GAME_MEDIA_TYPES)
+    file = models.FileField(upload_to=game_media_path)
 
 class Ratings(models.Model):
     id = models.BigAutoField(primary_key=True)

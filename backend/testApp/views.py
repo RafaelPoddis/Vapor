@@ -12,7 +12,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 class GameDetail(APIView):
-    def post(self, request, game_id):
+    def post(self, request, game_id): # Compra de jogo
         game = get_object_or_404(Games, id=game_id)
         user = request.user
 
@@ -25,7 +25,7 @@ class GameDetail(APIView):
         UserGame.objects.create(user=user, game=game)
         return Response({"message": "Game purchased!"}, status=status.HTTP_201_CREATED)
 
-    def get(self, request, game_id):
+    def get(self, request, game_id): # Pagina do jogo
         try:
             game = Games.objects.get(id=game_id)
             serializer = GameSerializer(game)
@@ -34,10 +34,19 @@ class GameDetail(APIView):
             return Response({"error": "Game not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class GameView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
     def post(self, request):
         serializer = GameSerializer(data=request.data)
+
         if serializer.is_valid():
-            serializer.save()
+            game = serializer.save()
+
+            media_files = request.FILES.getlist('media')
+            for file in media_files:
+                media_type = "image" if file.content_type.startswith("image") else "video"
+                GameMedia.objects.create(game=game, media_type=media_type, file=file)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -49,9 +58,17 @@ class GameView(APIView):
     def put(self, request, game_id):
         try:
             game = Games.objects.get(id=game_id)
+
+
             serializer = GameSerializer(game, data=request.data)
             if serializer.is_valid():
-                serializer.save()
+                game = serializer.save()
+
+                media_files = request.FILES.getlist('media')
+                for file in media_files:
+                    media_type = "image" if file.content_type.startswith("image") else "video"
+                    GameMedia.objects.create(game=game, media_type=media_type, file=file)
+                
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Games.DoesNotExist:
