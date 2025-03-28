@@ -14,7 +14,7 @@ class Genres(models.Model):
 
 class Games(models.Model):
     id = models.BigAutoField(primary_key=True)
-    name = models.CharField(unique=True, max_length=20)
+    name = models.CharField(unique=True, max_length=50)
     price = models.FloatField()
     description = models.TextField()
     isAdults = models.BooleanField()
