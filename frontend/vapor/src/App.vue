@@ -1,47 +1,65 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue'
+
+const count = ref("Essa")
+
+function funcao(){
+  if (count.value === "Essa"){
+    count.value = "Aquela"
+  }
+  else{
+    count.value = "Essa"
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Stalinist One' rel='stylesheet'>
+  <div class="top">
+    <div class="brand">
+      <img alt="Vapor Logo" class="logo" src="./assets/logo.svg" width="55" height="55">
+      <a class="title" href="App.vue">VAPOR</a>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div class="pages">
+      <a class="store-link" href="./HelloWorld.vue">STORE</a>
+      <a class="library-link" href="./TheWelcome.vue">LIBRARY</a>
+    </div>
+  </div>
+  <div>
+    <p>Menssagem: {{ count }}</p>
+    <button @click="funcao">Clica eu</button>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.top{
+  display: flex;
+  background-color: #171D25;
+  height: 100px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.pages{
+  display: flex;
+  margin-left: 35rem;
+  justify-content: right;
+  align-items: center;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.brand{
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
+
+.title{
+  font-size: x-large;
+  font-family: 'Stalinist One', sans-serif;
+}
+
+.logo{
+  margin: auto 1rem;
+  margin-left: 5rem;
+}
+
 </style>
