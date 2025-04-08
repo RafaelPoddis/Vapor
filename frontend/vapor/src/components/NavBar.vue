@@ -2,7 +2,7 @@
     <div class="navigation">
         <nav>
         <router-link to="/" class="nav-link" exact-active-class="active">Home Page</router-link>
-        <router-link to="/uploadgame" class="nav-link" exact-active-class="active">Upload Game</router-link>
+        <router-link to="/uploadGame" class="nav-link" exact-active-class="active">Upload Game</router-link>
         </nav>
     </div>
 </template>
