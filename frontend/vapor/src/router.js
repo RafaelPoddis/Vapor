@@ -2,23 +2,31 @@ import Library from './views/Library.vue'
 import HomePage from './views/HomePage.vue'
 import UploadGame from './views/UploadGame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import Layout from './components/Layout.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'HomePage',
-    component: HomePage
+    name: 'Layout',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'HomePage',
+        component: HomePage,
+      },
+      {
+        path: 'uploadGame',
+        name: 'UploadGame',
+        component: UploadGame
+      },
+      {
+        path: 'library',
+        name: 'Library',
+        component: Library
+      }
+    ]
   },
-  {
-    path: '/library',
-    name: 'Library',
-    component: Library
-  },
-  {
-    path: '/uploadGame',
-    name: 'UplaodGame',
-    component: UploadGame
-  }
 ]
 
 const router = createRouter({

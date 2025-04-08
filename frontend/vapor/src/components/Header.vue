@@ -1,12 +1,12 @@
 <template>
   <header class="top">
     <div class="brand">
-      <img alt="Vapor Logo" class="logo" :src="logo" width="55" height="55" />
+      <img alt="Vapor Logo" class="logo" :src="logo" width="55" height="55">
       <router-link to="/" class="title">VAPOR</router-link>
     </div>
     <div class="pages">
-      <router-link to="/" class="nav-link">STORE</router-link>
-      <router-link to="/library" class="nav-link">LIBRARY</router-link>
+      <router-link to="/" class="nav-link" exact-active-class="active">STORE</router-link>
+      <router-link to="/library" class="nav-link" exact-active-class="active">LIBRARY</router-link>
     </div>
   </header>
 </template>
@@ -43,5 +43,9 @@ import logo from "@/assets/logo.svg";
 .logo {
   margin: auto 1rem;
   margin-left: 5rem;
+}
+
+.active{
+  color: #4B8AF8;
 }
 </style>

@@ -1,9 +1,7 @@
 <template>
-  <div class="navigation">
-    <nav>
-      <router-link to="/" class="nav-link">Home Page</router-link>
-      <router-link to="/uploadgame" class="nav-link">Upload Game</router-link>
-    </nav>
+  <NavBar/>
+  <div class="section-title">
+    <p class="title">New Releases</p>
   </div>
   <div class="games">
     <GameCard name="God of War" price="$250.00"/>
@@ -22,11 +20,15 @@
       :image="game.image"
     />
   </div>
+  <div class="section-title">
+    <p class="title">Featured Games</p>
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import GameCard from '@/components/GameCard.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const games = ref([
   { id: 1, name: "God of War", price: "$250.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\3\\media\\test1.jpeg" },
@@ -42,20 +44,19 @@ defineProps({
 </script>
 
 <style scoped>
-.navigation{
-  display: flex;
-  margin-inline: 640px;
-  margin-block: 40px;
-  width: 640px;
-  height: 35px;
-  background-image: radial-gradient(#679FFF, #2C5192);
-  justify-content: center;
-  align-items: center;
-}
-
 .games{
   padding-inline: 60px;
   display: flex;
   flex-wrap: wrap;
+}
+
+.section-title{
+  margin-left: 85px;
+}
+
+.title{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 26px;
+  font-weight: bold;
 }
 </style>
