@@ -9,12 +9,27 @@
                     Description</p>
             </div>
         </div>
+        <div class="user-review-section" v-if="!userReview">
+            <p>algo sendo mostrado</p>
+        </div>
+        <div class="reviews" v-if="gameReview">
+            <div class="container">
+                <div class="player-info">
+                    <img alt="Player Avatar" class="player-avatar" :src="GameImage" width="96" height="96" />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
 import NavBar from '@/components/NavBar.vue';
 import GameImage from '@/assets/gamesImgs/gow.jpg'
+import { ref } from 'vue'
+
+const userReview = ref(true)
+const gameReview = ref(true)
+
 </script>
 
 <style scoped>
@@ -30,5 +45,9 @@ import GameImage from '@/assets/gamesImgs/gow.jpg'
 
 .game-info{
     margin-left: 40px;
+}
+
+.user-review-section{
+    background-color: blue;
 }
 </style>
