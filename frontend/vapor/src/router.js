@@ -3,6 +3,7 @@ import HomePage from './views/HomePage.vue'
 import UploadGame from './views/UploadGame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from './components/Layout.vue'
+import GamePage from './views/GamePage.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
         path: 'library',
         name: 'Library',
         component: Library
+      },
+      {
+        path: 'gamepage',
+        name: 'GamePage',
+        component: GamePage
       }
     ]
   },

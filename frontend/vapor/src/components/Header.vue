@@ -47,5 +47,6 @@ import logo from "@/assets/logo.svg";
 
 .active{
   color: #4B8AF8;
+  text-decoration: underline;
 }
 </style>
