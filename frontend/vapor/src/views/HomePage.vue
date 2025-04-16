@@ -4,6 +4,18 @@
     <p class="title">New Releases</p>
   </div>
   <div class="games">
+    <GameCard 
+    v-for="game in games"
+    :name="game.name"
+    :price="game.price"
+    :image="game.image"
+    :id="game.id"
+    />
+  </div>
+  <div class="section-title">
+    <p class="title">Featured Games</p>
+  </div>
+  <div class="games">
     <GameCard name="God of War" price="$250.00"/>
     <GameCard name="Jogo 2" price="$250.00"/>
     <GameCard name="Jogo 3" price="$250.00"/>
@@ -13,15 +25,6 @@
     <GameCard name="Jogo 7" price="$250.00"/>
     <GameCard name="Jogo 8" price="$250.00"/>
     <GameCard name="Jogo 9" price="$250.00"/>
-    <GameCard 
-      v-for="game in games"
-      :name="game.name"
-      :price="game.price"
-      :image="game.image"
-    />
-  </div>
-  <div class="section-title">
-    <p class="title">Featured Games</p>
   </div>
 </template>
 
@@ -33,19 +36,26 @@ import NavBar from '@/components/NavBar.vue'
 const games = ref([
   { id: 1, name: "God of War", price: "$250.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\3\\media\\test1.jpeg" },
   { id: 2, name: "Jogo 2", price: "$150.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\4\\media\\test2.png" },
-  { id: 3, name: "Jogo 3", price: "$100.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\4\\media\\test3.png" }
+  { id: 3, name: "Jogo 3", price: "$100.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\4\\media\\test3.png" },
+  { id: 4, name: "God of War 2", price: "$350.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\3\\media\\test1.jpeg" },
+  { id: 5, name: "Jogo 4", price: "$68.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\4\\media\\test2.png" },
+  { id: 6, name: "Jogo 5", price: "$10.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\4\\media\\test3.png" },
+  { id: 7, name: "God of War 3", price: "$20.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\3\\media\\test1.jpeg" },
+  { id: 8, name: "Jogo 6", price: "$124.00", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\4\\media\\test2.png" },
+  { id: 9, name: "Jogo 7", price: "$1.50", image: "C:\\Users\\Rafael\\Documents\\VaporProject\\backend\\media\\games\\4\\media\\test3.png" },
 ])
 
 defineProps({
   name: String,
   price: String,
-  image: String
+  image: String,
+  id: Number
 })
 </script>
 
 <style scoped>
 .games{
-  padding-inline: 60px;
+  padding-inline: 50px;
   display: flex;
   flex-wrap: wrap;
 }

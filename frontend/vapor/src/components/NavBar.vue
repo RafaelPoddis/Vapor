@@ -17,6 +17,7 @@
   background-image: radial-gradient(#679FFF, #2C5192);
   justify-content: center;
   align-items: center;
+  border-radius: 8px;
 }
 
 .active{

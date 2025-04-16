@@ -21,3 +21,7 @@ a,
     padding: 0 2rem;
   }
 }
+
+img{
+  border-radius: 8px;
+}

@@ -75,7 +75,7 @@
               <circle cx="9" cy="9" r="2" /></svg
           ></i>
           <p class="upload-text">
-            Arraste o seu histórico acadêmico em PDF ou clique aqui para selecioná-lo
+            Drag&Drop your game media here
           </p>
         </div>
       </div>

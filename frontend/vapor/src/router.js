@@ -4,6 +4,7 @@ import UploadGame from './views/UploadGame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from './components/Layout.vue'
 import GamePage from './views/GamePage.vue'
+import UserReviewCard from './components/UserReviewCard.vue'
 
 const routes = [
   {
@@ -27,9 +28,14 @@ const routes = [
         component: Library
       },
       {
-        path: 'gamepage',
+        path: 'gamepage/:id',
         name: 'GamePage',
         component: GamePage
+      },
+      {
+        path: 'teste',
+        name: 'Teste',
+        component: UserReviewCard
       }
     ]
   },
