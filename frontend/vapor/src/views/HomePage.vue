@@ -16,15 +16,12 @@
     <p class="title">Featured Games</p>
   </div>
   <div class="games">
-    <GameCard name="God of War" price="$250.00"/>
-    <GameCard name="Jogo 2" price="$250.00"/>
-    <GameCard name="Jogo 3" price="$250.00"/>
-    <GameCard name="Jogo 4" price="$250.00"/>
-    <GameCard name="Jogo 5" price="$250.00"/>
-    <GameCard name="Jogo 6" price="$250.00"/>
-    <GameCard name="Jogo 7" price="$250.00"/>
-    <GameCard name="Jogo 8" price="$250.00"/>
-    <GameCard name="Jogo 9" price="$250.00"/>
+    <GameCard 
+    v-for="game in games"
+    :name="game.name"
+    :price="game.price"
+    :image="game.image"
+    :id="game.id"/>
   </div>
 </template>
 

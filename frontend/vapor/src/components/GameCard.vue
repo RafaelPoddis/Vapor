@@ -33,4 +33,14 @@ defineProps({
     justify-content: space-between;
     align-items: center;
 }
+
+.jogo{
+    transition: transform 0.3s ease;
+}
+
+.jogo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+}
 </style>

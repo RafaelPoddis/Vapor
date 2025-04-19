@@ -2,8 +2,8 @@
     <div class="user-card">
         <div class="user-info">
             <img alt="User-Avatar" :src="GameImage" width="90" height="90">
-            <p class="username">Username</p>
-            <p class="num-reviews">53 reviews</p>
+            <p class="username">{{ username }}</p>
+            <p class="num-reviews">{{ reviews }}</p>
         </div>
         <div class="review-text">
             <p>Jogo foda, chega ser bizarroJogo foda, chega ser bizarro</p>
@@ -13,6 +13,11 @@
 
 <script setup>
 import GameImage from '@/assets/gamesImgs/gow.jpg'
+
+defineProps({
+    username: String,
+    reviews: String,
+})
 </script>
 
 <style scoped>

@@ -79,7 +79,7 @@
           </p>
         </div>
       </div>
-      <button type="submit">Salve</button>
+      <button class="submit" type="submit">Publish Game</button>
     </div>
   </form>
 </template>
@@ -108,6 +108,17 @@ import NavBar from "@/components/NavBar.vue";
 .upload-section {
   width: 900px;
   margin-right: 60px;
+}
+
+.submit{
+  border-width: 1px;
+  border-radius: 7px;
+  border-color: aqua;
+  background-color: #61ACC0;
+  color: white;
+  height: 40px;
+  width: 880px;
+  cursor: pointer;
 }
 
 .titles {
