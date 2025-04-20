@@ -8,8 +8,8 @@ import UserReviewCard from './components/UserReviewCard.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'Layout',
+    path: '/store',
+    name: 'Layout1',
     component: Layout,
     children: [
       {
@@ -23,11 +23,6 @@ const routes = [
         component: UploadGame
       },
       {
-        path: 'library',
-        name: 'Library',
-        component: Library
-      },
-      {
         path: 'gamepage/:id',
         name: 'GamePage',
         component: GamePage
@@ -39,6 +34,23 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/library',
+    name: 'Layout2',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'Library',
+        component: Library
+      },
+      {
+        path: 'gameinfo/:id',
+        name: 'GameInfo',
+        component: GamePage
+      },
+    ]
+  }
 ]
 
 const router = createRouter({

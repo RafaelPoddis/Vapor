@@ -2,11 +2,11 @@
   <header class="top">
     <div class="brand">
       <img alt="Vapor Logo" class="logo" :src="logo" width="55" height="55">
-      <router-link to="/" class="title">VAPOR</router-link>
+      <router-link to="/store" class="title">VAPOR</router-link>
     </div>
     <div class="pages">
-      <router-link to="/" class="nav-link" exact-active-class="active">STORE</router-link>
-      <router-link to="/library" class="nav-link" exact-active-class="active">LIBRARY</router-link>
+      <router-link to="/store" class="nav-link" active-class="active">STORE</router-link>
+      <router-link to="/library" class="nav-link" active-class="active">LIBRARY</router-link>
     </div>
   </header>
 </template>

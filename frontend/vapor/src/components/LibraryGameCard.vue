@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="`/store/gamepage/${ id }`">
+    <router-link :to="`/library/gameinfo/${ id }`">
         <div class="jogo">
             <img alt="Game Image" class="gameImg" :src="GameImage" width="200" height="200" />
             <div class="gameInfo">
