@@ -2,26 +2,35 @@
   <div class="general">
     <div class="game-list">
       <h2 margin-bottom="15px">Your Games</h2>
-      <router-link :to="`/library/gameinfo/${ id }`" v-for="game in games" :name="game.name">
+      <input class="search-input">
+      <div class="game-name" @click="selectGame(game)" v-for="game in games" :name="game.name">
         <p>{{ game.name }}</p>
-      </router-link>
+      </div>
     </div>
 
-    <div class="content">
+    <div class="content" v-if="!gameSelected">
       <h2>Recently Played</h2>
       <div class="games">
-        <GameCard v-for="game in games"
+        <LibraryGameCard @click="selectGame(game)" v-for="game in games"
         :name="game.name"
         />
       </div>
+    </div>
+    <div class="content" v-else>
+      <GameInfo :name="selectedGame.name" :id="selectedGame.id"/>
+      <button class="back-btn" @click="deselectGame">Back</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import GameCard from '@/components/GameCard.vue'
+import GameInfo from '../components/GameInfo.vue'
 import GameImage from '@/assets/gamesImgs/gow.jpg'
+import LibraryGameCard from '@/components/LibraryGameCard.vue'
+
+const gameSelected = ref(false)
+const selectedGame = ref(null)
 
 const games = ref([
   { id: 1, name: "God of War", price: "$250.00", image: GameImage },
@@ -35,6 +44,16 @@ const games = ref([
   { id: 9, name: "Jogo 7", price: "$1.50", image: GameImage },
 ])
 
+function selectGame(game) {
+  selectedGame.value = game
+  gameSelected.value = true
+}
+
+function deselectGame() {
+  selectedGame.value = null
+  gameSelected.value = false
+}
+
 </script>
 
 <style scoped>
@@ -45,7 +64,10 @@ const games = ref([
 }
 
 .game-list{
+  background-color: #171d259a;
   width: 380px;
+  padding-left: 5px;
+  min-height: 100vh;
 }
 
 .content{
@@ -55,5 +77,28 @@ const games = ref([
 .games{
   display: flex;
   flex-wrap: wrap;
+}
+
+.game-name:hover{
+  background-color: #171d25;
+  cursor: pointer;
+}
+
+.back-btn{
+  border-radius: 7px;
+  border: none;
+  background-color: #61ACC0;
+  color: white;
+  height: 30px;
+  cursor: pointer;
+}
+
+.search-input{
+  background-color: #3a3a3a;
+  color: white;
+  border: 1px solid #5f5f5f;
+  border-radius: 5px;
+  height: 28px;
+  margin-bottom: 10px;
 }
 </style>

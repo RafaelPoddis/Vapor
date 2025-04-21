@@ -54,8 +54,8 @@
       >
         <input type="file" ref="arquivo" @change="handleFileSelect" accept=".pdf" class="hidden" />
         <div class="upload-content">
-          <i class="upload-icon"
-            ><svg
+          <i class="upload-icon">
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               width="110"
               height="110"

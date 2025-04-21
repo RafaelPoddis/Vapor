@@ -1,9 +1,9 @@
 import Library from './views/Library.vue'
+import GamePage from './views/GamePage.vue'
 import HomePage from './views/HomePage.vue'
+import Layout from './components/Layout.vue'
 import UploadGame from './views/UploadGame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import Layout from './components/Layout.vue'
-import GamePage from './views/GamePage.vue'
 import UserReviewCard from './components/UserReviewCard.vue'
 
 const routes = [
@@ -43,11 +43,6 @@ const routes = [
         path: '',
         name: 'Library',
         component: Library
-      },
-      {
-        path: 'gameinfo/:id',
-        name: 'GameInfo',
-        component: GamePage
       },
     ]
   }
