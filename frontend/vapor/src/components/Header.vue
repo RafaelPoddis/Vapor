@@ -7,6 +7,10 @@
     <div class="pages">
       <router-link to="/store" class="nav-link" active-class="active">STORE</router-link>
       <router-link to="/library" class="nav-link" active-class="active">LIBRARY</router-link>
+      <router-link to="/profile" class="nav-link" active-class="active">PROFILE</router-link>
+    </div>
+    <div class="login">
+      <router-link to="/login" class="nav-link">Login</router-link>
     </div>
   </header>
 </template>
@@ -20,11 +24,13 @@ import logo from "@/assets/logo.svg";
   display: flex;
   background-color: #171d25;
   height: 100px;
+  align-items: center;
 }
 
 .pages {
   display: flex;
   margin-left: 35rem;
+  margin-right: 35rem;
   justify-content: right;
   align-items: center;
 }
@@ -43,6 +49,10 @@ import logo from "@/assets/logo.svg";
 .logo {
   margin: auto 1rem;
   margin-left: 5rem;
+}
+
+.login{
+  margin-left: 8rem;
 }
 
 .active{

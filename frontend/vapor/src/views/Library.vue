@@ -60,13 +60,12 @@ function deselectGame() {
 .general{
   display: flex;
   max-width: 1900px;
-  margin-inline: 10px;
 }
 
 .game-list{
   background-color: #171d259a;
   width: 380px;
-  padding-left: 5px;
+  padding-left: 10px;
   min-height: 100vh;
 }
 
