@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="user-review" v-else>Nao</div>
-        <div class="game-reviews" v-if="gamReviews">
+        <div class="game-reviews" v-if="!gamReviews">
             <p>This game has no reviews</p>
         </div>
         <div class="game-reviews" v-else>

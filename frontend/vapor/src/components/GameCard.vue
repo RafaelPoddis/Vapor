@@ -1,7 +1,7 @@
 <template>
     <router-link :to="`/store/gamepage/${ id }`">
         <div class="jogo">
-            <img alt="Game Image" class="gameImg" :src="GameImage" width="200" height="200" />
+            <img alt="Game Image" class="gameImg" :src="image" width="200" height="200" />
             <div class="gameInfo">
                 <p>{{ name }}</p>
                 <p>{{ price }}</p>
@@ -15,7 +15,7 @@ import GameImage from '@/assets/gamesImgs/gow.jpg'
 
 defineProps({
   name: String,
-  price: String,
+  price: Number,
   image: String,
   id: Number
 })

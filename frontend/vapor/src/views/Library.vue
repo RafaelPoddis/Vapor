@@ -32,6 +32,10 @@ import LibraryGameCard from '@/components/LibraryGameCard.vue'
 const gameSelected = ref(false)
 const selectedGame = ref(null)
 
+defineProps({
+  achievements: Number,
+})
+
 const games = ref([
   { id: 1, name: "God of War", price: "$250.00", image: GameImage },
   { id: 2, name: "Jogo 2", price: "$150.00", image: GameImage},
