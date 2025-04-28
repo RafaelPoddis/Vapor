@@ -33,6 +33,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+        extra_kwargs = {
+            'avatar': {'required': False}
+        }
 
     def get_ratings(self, obj):
         return [

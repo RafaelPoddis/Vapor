@@ -3,20 +3,14 @@
     <div class="general">
         <div class="media-section">
             <div class="img-title">
-                <img alt="Game Image" class="gameImg" :src="selectedGame?.image" width="720" height="360" />
-                <!-- <video width="720" height="400" controls>
-                    <source :src="selectedGame?.image" type="video/mp4" />
-                    Seu navegador não suporta a tag de vídeo.
-                </video> -->
+                <img alt="Game Image" class="gameImg" :src="game.image" width="720" height="360" />
                 <div class="game-title">
-                    <h1>{{ selectedGame?.name || 'Jogo não encontrado' }}</h1>
+                    <h1>{{ game.name }}</h1>
                 </div>
             </div>
             <div class="game-info">
-                <p>DescriptionDescriptionDescription<br>
-                    DescriptionDescriptionDescription<br>
-                    Description</p>
-                <p></p>
+                <p>{{ game.description }}</p>
+                <p>Price:  ${{ game.price }}</p>
             </div>
         </div>
         <div class="user-review" v-if="!userReview">
@@ -54,13 +48,13 @@
             </div>
         </div>
         <div class="user-review" v-else>Nao</div>
-        <div class="game-reviews" v-if="!gamReviews">
+        <div class="game-reviews" v-if="!hasReviews">
             <p>This game has no reviews</p>
         </div>
         <div class="game-reviews" v-else>
-            <UserReviewCard v-for="user in users"
-            :username="user.username"
-            :reviews="user.reviews"/>
+            <UserReviewCard v-for="review in game.ratings" :key="review.id"
+            :username="review.username"
+            :reviews="review.content"/>
         </div>
     </div>
 </template>
@@ -69,48 +63,27 @@
 import NavBar from '@/components/NavBar.vue';
 import GameImage from '@/assets/gamesImgs/gow.jpg'
 import { useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
 import UserReviewCard from '@/components/UserReviewCard.vue';
 
 const route = useRoute()
 const gameId = route.params.id
 const userReview = ref(false)
-const gamReviews = ref(false)
+
+// Você pode usar um computed para verificar se há reviews
+const hasReviews = computed(() => {
+  return game.value && game.value.ratings && game.value.ratings.length > 0
+})
 
 const hoverIndex = ref(-1)
 
-defineProps({
-    username: String,
-    reviews: String,
-    name: String,
-    price: String,
-    image: [String, File],
-    id: Number
-})
+const game = ref([])
 
-const games = ref([
-  { id: 1, name: "God of War", price: "$250.00", image: GameImage },
-  { id: 2, name: "Jogo 2", price: "$150.00", image: GameImage},
-  { id: 3, name: "Jogo 3", price: "$100.00", image: GameImage },
-  { id: 4, name: "God of War 2", price: "$350.00", image: GameImage },
-  { id: 5, name: "Jogo 4", price: "$68.00", image: GameImage },
-  { id: 6, name: "Jogo 5", price: "$10.00", image: GameImage },
-  { id: 7, name: "God of War 3", price: "$20.00", image: GameImage },
-  { id: 8, name: "Jogo 6", price: "$124.00", image: GameImage },
-  { id: 9, name: "Jogo 7", price: "$1.50", image: GameImage },
-])
-
-const users = ref([
-    {username: 'User 1', reviews: '5 reviews'},
-    {username: 'User 2', reviews: '25 reviews'},
-    {username: 'User 3', reviews: '55 reviews'},
-    {username: 'User 4', reviews: '24 reviews'},
-    {username: 'User 5', reviews: '167 reviews'},
-    {username: 'User 6', reviews: '954 reviews'},
-])
-
-const selectedGame = computed(() => {
-  return games.value.find(game => game.id === Number(gameId))
+onMounted(() => {
+    axios
+    .get(`http://127.0.0.1:8000/testApp/games/${gameId}/detail`, {headers: {'Authorization': 'Token f70f5d2b34439fac015e2a3dce56f4485aaa681f'}})
+    .then(response => {game.value = response.data})
 })
 </script>
 

@@ -11,13 +11,13 @@
 </template>
 
 <script setup>
-import GameImage from '@/assets/gamesImgs/gow.jpg'
 
 defineProps({
   name: String,
   price: Number,
   image: String,
-  id: Number
+  id: Number,
+  description: String
 })
 </script>
 

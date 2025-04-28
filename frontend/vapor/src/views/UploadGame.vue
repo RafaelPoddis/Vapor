@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <form class="general" onsubmit="funcao">
+  <form class="general">
     <div class="inputs">
       <div class="container">
         <label class="titles" for="title">Game Title</label>
@@ -8,12 +8,7 @@
       </div>
       <div class="container">
         <label class="titles" for="description">Description</label>
-        <textarea
-          class="description-input"
-          id="description"
-          placeholder="Game description..."
-          rows="5"
-        ></textarea>
+        <textarea class="description-input" id="description" placeholder="Game description..." rows="5"></textarea>
       </div>
       <div class="container">
         <label class="titles" for="genre">Genre</label>
@@ -40,43 +35,20 @@
 
     <div class="upload-section">
       <p class="titles">Upload your game media here</p>
-      <div
-        class="upload-area"
-        @drag.prevent
-        @dragstart.prevent
-        @dragend.prevent
-        @dragover.prevent
-        @dragenter.prevent
-        @dragleave.prevent
-        @drop.prevent="handleDrop"
-        :class="{ dragging: isDragging }"
-        @click="$refs.arquivo.click()"
-      >
+      <div class="upload-area" @drag.prevent @dragstart.prevent @dragend.prevent @dragover.prevent @dragenter.prevent
+        @dragleave.prevent @drop.prevent="handleDrop" :class="{ dragging: isDragging }" @click="$refs.arquivo.click()">
         <input type="file" ref="arquivo" @change="handleFileSelect" accept=".pdf" class="hidden" />
         <div class="upload-content">
           <i class="upload-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="110"
-              height="110"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="0.4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="up-icon"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round" class="up-icon">
               <path
-                d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21"
-              />
+                d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21" />
               <path d="m14 19.5 3-3 3 3" />
               <path d="M17 22v-5.5" />
-              <circle cx="9" cy="9" r="2" /></svg
-          ></i>
-          <p class="upload-text">
-            Drag&Drop your game media here
-          </p>
+              <circle cx="9" cy="9" r="2" />
+            </svg></i>
+          <p class="upload-text">Drag&Drop your game media here</p>
         </div>
       </div>
       <button class="submit" type="submit">Publish Game</button>
@@ -88,7 +60,7 @@
 import NavBar from "@/components/NavBar.vue";
 </script>
 
-<style scoped>
+<style scoped lang="css">
 .general {
   display: flex;
 }
@@ -97,6 +69,7 @@ import NavBar from "@/components/NavBar.vue";
   display: flex;
   flex-direction: column;
 }
+
 .inputs {
   width: 900px;
   margin-left: 60px;
@@ -110,11 +83,11 @@ import NavBar from "@/components/NavBar.vue";
   margin-right: 60px;
 }
 
-.submit{
+.submit {
   border-width: 1px;
   border-radius: 7px;
   border-color: aqua;
-  background-color: #61ACC0;
+  background-color: #61acc0;
   color: white;
   height: 40px;
   width: 880px;

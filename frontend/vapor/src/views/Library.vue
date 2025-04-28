@@ -18,6 +18,17 @@
     </div>
     <div class="content" v-else>
       <GameInfo :name="selectedGame.name" :id="selectedGame.id"/>
+      <div class="achievements">
+        <h2>Achievements</h2>
+        <div class="progression">
+          <div class="text">
+            <p>25 / 100 achieved (25%)</p>
+          </div>
+          <div class="progress-bar">
+            <div class="inner-progress-bar"></div>
+          </div>
+        </div>
+      </div>
       <button class="back-btn" @click="deselectGame">Back</button>
     </div>
   </div>
@@ -94,6 +105,7 @@ function deselectGame() {
   color: white;
   height: 30px;
   cursor: pointer;
+  margin-top: 15px;
 }
 
 .search-input{
@@ -103,5 +115,28 @@ function deselectGame() {
   border-radius: 5px;
   height: 28px;
   margin-bottom: 10px;
+}
+
+.progression{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 7px;
+  max-width: 225px;
+  background-color: rgb(58, 58, 58);
+  gap: 7px;
+}
+
+.progress-bar{
+  border-radius: 15px;
+  height: 12px;
+  background-color: rgb(143, 143, 143);
+}
+
+.inner-progress-bar{
+  border-radius: 15px;
+  height: 12px;
+  background-color: #2d40aa;
+  width: 25%;
 }
 </style>
