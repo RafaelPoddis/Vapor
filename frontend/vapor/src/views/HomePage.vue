@@ -23,10 +23,12 @@
     :id="game.id"
     :description="game.description"/>
   </div>
+  <Footer/>
 </template>
 
 <script setup>
 import GameCard from '@/components/GameCard.vue'
+import Footer from '@/components/Footer.vue'
 import NavBar from '@/components/NavBar.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
@@ -35,8 +37,9 @@ const games = ref([])
 
 onMounted(() => {
   axios
-    .get('http://127.0.0.1:8000/testApp/games', {headers: {'Authorization': 'Token f70f5d2b34439fac015e2a3dce56f4485aaa681f'}})
-    .then(response => {games.value = response.data})
+    .get('http://127.0.0.1:8000/testApp/games', {headers: {'Authorization': 'Token 648a4b0e40fe9e02f1a091d24f395bc5be780516'}})
+    .then(response => {games.value = response.data});
+  document.title = "STORE";
 })
 
 defineProps({

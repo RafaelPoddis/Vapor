@@ -1,4 +1,5 @@
 <template>
+    <title>{{ game.name }}</title>
     <NavBar/>
     <div class="general">
         <div class="media-section">
@@ -82,7 +83,7 @@ const game = ref([])
 
 onMounted(() => {
     axios
-    .get(`http://127.0.0.1:8000/testApp/games/${gameId}/detail`, {headers: {'Authorization': 'Token f70f5d2b34439fac015e2a3dce56f4485aaa681f'}})
+    .get(`http://127.0.0.1:8000/testApp/games/${gameId}/detail`, {headers: {'Authorization': 'Token 648a4b0e40fe9e02f1a091d24f395bc5be780516'}})
     .then(response => {game.value = response.data})
 })
 </script>

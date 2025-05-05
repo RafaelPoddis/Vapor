@@ -1,68 +1,145 @@
 <template>
   <NavBar />
   <form class="general">
-    <div class="inputs">
-      <div class="container">
-        <label class="titles" for="title">Game Title</label>
-        <textarea class="text-box" id="title" placeholder="The Game" rows="1"></textarea>
-      </div>
-      <div class="container">
-        <label class="titles" for="description">Description</label>
-        <textarea class="description-input" id="description" placeholder="Game description..." rows="5"></textarea>
-      </div>
-      <div class="container">
-        <label class="titles" for="genre">Genre</label>
-        <textarea class="text-box" id="Genre" placeholder="Browse Genres" rows="1"></textarea>
-      </div>
-      <div class="container">
-        <label class="titles" for="price">Price</label>
-        <textarea class="text-box" id="price" placeholder="R$ 0,00" rows="1"></textarea>
-      </div>
-      <div>
-        <p class="titles">Content Rating</p>
-        <div class="radios">
-          <div class="checks">
-            <input type="radio" id="minor" value="minor" name="option" checked />
-            <label for="minor">For Everyone</label>
-          </div>
-          <div class="checks">
-            <input type="radio" id="adult" value="adult" name="option" />
-            <label for="adult">Adults Only</label>
+    <div class="hasAccount" v-if="hasAccount">
+      <div class="inputs">
+        <div class="container">
+          <label class="titles" for="title">Game Title</label>
+          <textarea class="text-box" v-model="gameName" id="title" placeholder="The Game" rows="1"></textarea>
+        </div>
+        <div class="container">
+          <label class="titles" for="description">Description</label>
+          <textarea class="description-input" v-model="gameDescription" id="description" placeholder="Game description..." rows="5"></textarea>
+        </div>
+        <div class="container">
+          <label class="titles" for="genre">Genre</label>
+          <Multiselect 
+            class="genres-input"
+            v-model="selectedGenres"
+            :options="gameGenres"
+            :multiple="true"
+            :taggable="true"
+            placeholder="Browse Genres"
+            label="name"
+            track-by="name"
+          />
+        </div>
+        <div class="container">
+          <label class="titles" for="price">Price</label>
+          <textarea class="text-box" v-model="gamePrice" id="price" placeholder="R$ 0,00" rows="1"></textarea>
+        </div>
+        <div>
+          <p class="titles">Content Rating</p>
+          <div class="radios">
+            <div class="checks">
+              <input type="radio" v-model="isAdults" id="minor" value="false" name="option" checked />
+              <label for="minor">For Everyone</label>
+            </div>
+            <div class="checks">
+              <input type="radio" v-model="isAdults" id="adult" value="true" name="option" />
+              <label for="adult">Adults Only</label>
+            </div>
           </div>
         </div>
+      </div>
+  
+      <div class="upload-section">
+        <p class="titles">Upload your game media here</p>
+        <div class="upload-area" 
+          @drag.prevent
+          @dragstart.prevent
+          @dragend.prevent
+          @dragover.prevent
+          @dragenter.prevent
+          @dragleave.prevent
+          @drop.prevent="handleDrop"
+          :class="{ dragging: isDragging }"
+          @click="$refs.arquivo.click()">
+          <input type="file" ref="arquivo" @change="handleFileSelect" accept=".mp4, .jpg, .jpeg, .png" class="hidden" />
+          <div class="upload-content">
+            <i class="upload-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round" class="up-icon">
+                <path
+                  d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21" />
+                <path d="m14 19.5 3-3 3 3" />
+                <path d="M17 22v-5.5" />
+                <circle cx="9" cy="9" r="2" />
+              </svg></i>
+            <p class="upload-text">Drag&Drop your game media here</p>
+          </div>
+        </div>
+        <button class="submit" type="submit">Publish Game</button>
       </div>
     </div>
 
-    <div class="upload-section">
-      <p class="titles">Upload your game media here</p>
-      <div class="upload-area" @drag.prevent @dragstart.prevent @dragend.prevent @dragover.prevent @dragenter.prevent
-        @dragleave.prevent @drop.prevent="handleDrop" :class="{ dragging: isDragging }" @click="$refs.arquivo.click()">
-        <input type="file" ref="arquivo" @change="handleFileSelect" accept=".pdf" class="hidden" />
-        <div class="upload-content">
-          <i class="upload-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round" class="up-icon">
-              <path
-                d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21" />
-              <path d="m14 19.5 3-3 3 3" />
-              <path d="M17 22v-5.5" />
-              <circle cx="9" cy="9" r="2" />
-            </svg></i>
-          <p class="upload-text">Drag&Drop your game media here</p>
-        </div>
+    <div class="hasAccount" v-else>
+      <div class="noAcc">
+        <p class="warning">You need an<br>account to use<br>this feature.</p>
+        <router-link to="/login" class="login-btn">Login</router-link>
       </div>
-      <button class="submit" type="submit">Publish Game</button>
     </div>
   </form>
 </template>
 
 <script setup>
 import NavBar from "@/components/NavBar.vue";
+import { ref } from 'vue';
+import axios from "axios";
+import Multiselect from "vue-multiselect";
+
+const hasAccount = ref(true)
+const gameName = ref('')
+const gamePrice = ref('')
+const gameDescription = ref('')
+const isAdults = ref('')
+const gameMedia = ref([])
+const gameGenres = ref([])
+const selectedGenres = ref([])
+
+
+
+function postGame(){
+  axios
+    .post('http://127.0.0.1:8000/testApp/games/', {name:gameName, price:gamePrice, description:gameDescription, isAdults:isAdults})
+}
 </script>
 
 <style scoped lang="css">
 .general {
   display: flex;
+}
+
+.hasAccount{
+  display: flex;
+}
+
+.noAcc{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1920px;
+}
+
+.login-btn{
+  color: white;
+  font-weight: bolder;
+  border-radius: 7px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  background-color: rgb(14, 177, 14);
+  border: none;
+}
+
+.warning{
+  display: flex;
+  font-weight: bold;
+  font-size:xx-large;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .container {
@@ -80,7 +157,6 @@ import NavBar from "@/components/NavBar.vue";
 
 .upload-section {
   width: 900px;
-  margin-right: 60px;
 }
 
 .submit {
@@ -108,6 +184,44 @@ import NavBar from "@/components/NavBar.vue";
   height: 35px;
   width: 500px;
   resize: none;
+}
+
+.multiselect {
+  background-color: #3a3a3a;
+  border: 1px solid #5f5f5f;
+  border-radius: 8px;
+  padding: 6px;
+  width: 500px;
+  color: #d1d5db; /* texto claro */
+  font-size: 14px;
+}
+
+.multiselect__input,
+.multiselect__single {
+  background-color: transparent;
+  color: #d1d5db;
+}
+
+.multiselect__placeholder {
+  color: #5f5f5f;
+}
+
+.multiselect__option--highlight {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.multiselect__option--selected {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.multiselect__tag {
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin: 2px;
 }
 
 .description-input {

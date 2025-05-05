@@ -86,7 +86,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',  # Adiciona autenticação por token
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',  # Garante que apenas usuários autenticados acessem certas views
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
     ],
 }
 

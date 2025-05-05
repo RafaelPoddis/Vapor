@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 # Create your views here.
 class GameDetail(APIView):
@@ -151,7 +151,7 @@ class GetAllUsers(APIView):
             return Response({"error: No registered users!"}, status=status.HTTP_404_NOT_FOUND)     
 
 class UserView(APIView):
-    parser_classes = (MultiPartParser, FormParser) # Suporte para arquivos
+    parser_classes = (MultiPartParser, FormParser, JSONParser) # Suporte para arquivos
 
     def post(self, request):
         username = request.data.get('username')
