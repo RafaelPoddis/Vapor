@@ -2,22 +2,29 @@
     <div class="user-card">
         <div class="user-info">
             <img alt="User-Avatar" :src="GameImage" width="90" height="90">
-            <p class="username">{{ username }}</p>
-            <p class="num-reviews">{{ reviews }}</p>
+            <p class="username">{{ userId }}</p>
+            <!-- <p class="num-reviews">{{ reviews }}</p> -->
         </div>
         <div class="review-text">
-            <p>Jogo foda, chega ser bizarroJogo foda, chega ser bizarro</p>
+            <p>{{ reviewBody }}</p>
         </div>
     </div>
 </template>
 
 <script setup>
 import GameImage from '@/assets/gamesImgs/gow.jpg'
+import axios from 'axios';
+import { onMounted } from 'vue';
 
 defineProps({
-    username: String,
-    reviews: String,
+    userId: String,
+    reviewBody: String
 })
+
+// onMounted(() => {
+//     axios
+//     .get('http://127.0.0.1:8000/testApp/user/1', )
+// })
 </script>
 
 <style scoped>

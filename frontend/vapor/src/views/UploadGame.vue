@@ -1,15 +1,15 @@
 <template>
   <NavBar />
-  <form class="general">
+  <form @submit.prevent="postGame" class="general">
     <div class="hasAccount" v-if="hasAccount">
       <div class="inputs">
         <div class="container">
           <label class="titles" for="title">Game Title</label>
-          <textarea class="text-box" v-model="gameName" id="title" placeholder="The Game" rows="1"></textarea>
+          <textarea required class="text-box" v-model="gameName" id="title" placeholder="The Game" rows="1"></textarea>
         </div>
         <div class="container">
           <label class="titles" for="description">Description</label>
-          <textarea class="description-input" v-model="gameDescription" id="description" placeholder="Game description..." rows="5"></textarea>
+          <textarea required class="description-input" v-model="gameDescription" id="description" placeholder="Game description..." rows="5"></textarea>
         </div>
         <div class="container">
           <label class="titles" for="genre">Genre</label>
@@ -26,17 +26,17 @@
         </div>
         <div class="container">
           <label class="titles" for="price">Price</label>
-          <textarea class="text-box" v-model="gamePrice" id="price" placeholder="R$ 0,00" rows="1"></textarea>
+          <textarea required class="text-box" v-model="gamePrice" id="price" placeholder="R$ 0,00" rows="1"></textarea>
         </div>
         <div>
           <p class="titles">Content Rating</p>
           <div class="radios">
             <div class="checks">
-              <input type="radio" v-model="isAdults" id="minor" value="false" name="option" checked />
+              <input type="radio" v-model="isAdults" id="minor" :value="false" name="option" checked />
               <label for="minor">For Everyone</label>
             </div>
             <div class="checks">
-              <input type="radio" v-model="isAdults" id="adult" value="true" name="option" />
+              <input type="radio" v-model="isAdults" id="adult" :value="true" name="option" />
               <label for="adult">Adults Only</label>
             </div>
           </div>
@@ -53,7 +53,6 @@
           @dragenter.prevent
           @dragleave.prevent
           @drop.prevent="handleDrop"
-          :class="{ dragging: isDragging }"
           @click="$refs.arquivo.click()">
           <input type="file" ref="arquivo" @change="handleFileSelect" accept=".mp4, .jpg, .jpeg, .png" class="hidden" />
           <div class="upload-content">
@@ -84,7 +83,7 @@
 
 <script setup>
 import NavBar from "@/components/NavBar.vue";
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from "axios";
 import Multiselect from "vue-multiselect";
 
@@ -92,16 +91,21 @@ const hasAccount = ref(true)
 const gameName = ref('')
 const gamePrice = ref('')
 const gameDescription = ref('')
-const isAdults = ref('')
+const isAdults = ref()
 const gameMedia = ref([])
 const gameGenres = ref([])
 const selectedGenres = ref([])
 
-
+onMounted(() => {
+  axios
+    .get('http://127.0.0.1:8000/testApp/genres/')
+    .then(response => {gameGenres.value = response.data, console.log(response.data)})
+})
 
 function postGame(){
   axios
-    .post('http://127.0.0.1:8000/testApp/games/', {name:gameName, price:gamePrice, description:gameDescription, isAdults:isAdults})
+    .post('http://127.0.0.1:8000/testApp/games/', {name:gameName.value, price:gamePrice.value, description:gameDescription.value, genre_ids:gameGenres.value, isAdults:isAdults.value})
+    .catch(error => console.log(error))
 }
 </script>
 
@@ -186,42 +190,52 @@ function postGame(){
   resize: none;
 }
 
-.multiselect {
+:deep(.multiselect) {
   background-color: #3a3a3a;
   border: 1px solid #5f5f5f;
   border-radius: 8px;
   padding: 6px;
   width: 500px;
-  color: #d1d5db; /* texto claro */
+  color: #d1d5db;
   font-size: 14px;
 }
 
-.multiselect__input,
-.multiselect__single {
-  background-color: transparent;
+:deep(.multiselect__input,
+.multiselect__single) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
   color: #d1d5db;
 }
 
-.multiselect__placeholder {
+:deep(.multiselect__placeholder) {
   color: #5f5f5f;
+  padding-left: 6px;
 }
 
-.multiselect__option--highlight {
+:deep(.multiselect__option--highlight) {
   background-color: #2c3e50;
   color: white;
 }
 
-.multiselect__option--selected {
+:deep(.multiselect__option--selected) {
   background-color: #3b82f6;
   color: white;
 }
 
-.multiselect__tag {
+:deep(.multiselect__tag) {
+  display: flex;
+  flex-direction: column;
   background-color: #3b82f6;
   color: white;
   border-radius: 4px;
   padding: 2px 6px;
   margin: 2px;
+}
+
+:deep(.multiselect__content-wrapper) {
+  height: fit-content !important;
 }
 
 .description-input {

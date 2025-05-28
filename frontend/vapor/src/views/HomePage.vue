@@ -37,7 +37,7 @@ const games = ref([])
 
 onMounted(() => {
   axios
-    .get('http://127.0.0.1:8000/testApp/games', {headers: {'Authorization': 'Token 648a4b0e40fe9e02f1a091d24f395bc5be780516'}})
+    .get('http://127.0.0.1:8000/testApp/games'/*{headers: {'Authorization': 'Token 648a4b0e40fe9e02f1a091d24f395bc5be780516'}}*/)
     .then(response => {games.value = response.data});
   document.title = "STORE";
 })

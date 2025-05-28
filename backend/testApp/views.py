@@ -34,7 +34,7 @@ class GameDetail(APIView):
             return Response({"error": "Game not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class GameView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
 
     def post(self, request):
         serializer = GameSerializer(data=request.data)

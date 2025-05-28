@@ -5,9 +5,16 @@ class GameSerializer(serializers.ModelSerializer):
     ratings = serializers.SerializerMethodField()  # Puxa os dados das avaliações manualmente
     genres = serializers.SerializerMethodField()
 
+    genre_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Genres.objects.all(),
+        write_only=True,
+        source='genres'
+    )
+
     class Meta:
         model = Games
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'price', 'isAdults', 'ratings', 'genres', 'genre_ids']
 
     def get_ratings(self, obj):
         return [
