@@ -4,7 +4,7 @@
             <img alt="Game Image" class="gameImg" :src="image" width="200" height="200" />
             <div class="gameInfo">
                 <p>{{ name }}</p>
-                <p>{{ price }}</p>
+                <p>${{ price }}</p>
             </div>
         </div>
     </router-link>
