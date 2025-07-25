@@ -22,6 +22,9 @@
             placeholder="Browse Genres"
             label="name"
             track-by="name"
+            :searchable="true"
+            :clear-on-select="false"
+            :preserve-search="true"
           />
         </div>
         <div class="container">
@@ -104,7 +107,7 @@ onMounted(() => {
 
 function postGame(){
   axios
-    .post('http://127.0.0.1:8000/testApp/games/', {name:gameName.value, price:gamePrice.value, description:gameDescription.value, genre_ids:gameGenres.value, isAdults:isAdults.value})
+    .post('http://127.0.0.1:8000/testApp/games/', {name:gameName.value, price:gamePrice.value, description:gameDescription.value, genre_ids:selectedGenres.value, isAdults:isAdults.value})
     .catch(error => console.log(error))
 }
 </script>
