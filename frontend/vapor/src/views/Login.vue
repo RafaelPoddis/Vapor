@@ -1,21 +1,27 @@
 <template>
     <div class="general">
         <img alt="Vapor Logo" class="logo" :src="logo" width="55" height="55">
-        <p class="title">VAPOR</p>
+        <p class="title"><span class="alt-font">Sign in to</span> VAPOR</p>
         <form class="login" @submit.prevent="handleLogin">
-            <div class="content" v-if="hasAcc">
-                <div class="container">
-                    <label class="username" for="username">Username or email address</label>
-                    <input type="text" v-model="username" required id="username" name="username">
-                </div>
-                <div class="container">
-                    <div class="password-label">
-                        <label class="password" for="password">Password</label>
-                        <a href="#" class="forgot-password">Forgot password?</a>
+            <div class="hasAcc" v-if="hasAcc">
+                <div class="content">
+                    <div class="container">
+                        <label class="username" for="username">Username or email address</label>
+                        <input type="text" v-model="username" required id="username" name="username">
                     </div>
-                    <input type="password" v-model="password" required id="password" name="password">
+                    <div class="container">
+                        <div class="password-label">
+                            <label class="password" for="password">Password</label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <input type="password" v-model="password" required id="password" name="password">
+                    </div>
+                    <button class="login-btn" type="submit">Login</button>
                 </div>
-                <button class="login-btn" type="submit">Login</button>
+                <div class="content">
+                    <p class="newAcc">New to Vapor?</p>
+                    <a href="#" class="createAcc">Create an account</a>
+                </div>
             </div>
             <div class="content" v-else>
                 <p>outro</p>
@@ -52,7 +58,7 @@ function handleLogin() {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 60vh;
+    /* height: 100vh; */
 }
 
 .title {
@@ -62,14 +68,22 @@ function handleLogin() {
     margin-bottom: 30px;
 }
 
+.alt-font{
+    font-family: "Montserrat", sans-serif;
+}
+
+.hasAcc{
+    height: auto;
+}
+
 .content {
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 25px;
-    max-width: fit-content;
+    width: 130%;
     border: 1px solid;
     border-radius: 8px;
-    padding: 55px;
     background-color: #1B2838;
     border-color: #2b617c;
 }
@@ -84,6 +98,11 @@ function handleLogin() {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.newAcc{
+    font-size: medium;
+    font-family: "Stalinist One", sans-serif;
 }
 
 input {
