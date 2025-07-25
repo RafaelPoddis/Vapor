@@ -31,14 +31,16 @@
                     <div class="stars">
                         <button v-for="(star, index) in 5" :key="index" 
                         class="star-btn"
+                        type="button"
                         @mouseover="hoverIndex = index"
-                        @mouseleave="hoverIndex = -1">
+                        @mouseleave="hoverIndex = -1"
+                        @click="handleStarClick(index)">
                             <svg 
                             xmlns="http://www.w3.org/2000/svg"
                             width="24" height="24" 
                             viewBox="0 0 24 24" 
                             fill="none"
-                            :class="{ filled: index <= hoverIndex }"
+                            :class="{ filled: index < selectedRating || index <= hoverIndex }"
                             stroke="#A0AAB1" 
                             stroke-width="1" 
                             stroke-linecap="round" 
@@ -77,7 +79,7 @@ const gameId = route.params.id
 const userReview = ref()
 
 const body = ref('')
-const value = ref()
+const value = ref(0)
 const userId = ref()
 
 const ratings = computed(() => game.value?.ratings || [])
@@ -89,6 +91,11 @@ const hasReviews = computed(() => {
 const hoverIndex = ref(-1)
 
 const game = ref(null)
+const handleStarClick = (index) => {
+  value.value = index + 1
+  console.log("Rating:", value.value)
+}
+
 
 onMounted(() => {
     axios
@@ -135,8 +142,8 @@ function postReview(){
 }
 
 .filled{
-    fill: #FDAA05;
-    stroke: #FDAA05;
+    fill: #facc15;
+    stroke: #facc15;
 }
 
 .yes-button{
