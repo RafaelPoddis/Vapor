@@ -44,7 +44,7 @@ const password = ref('')
 function handleLogin() {
     console.log("entrou")
     axios
-        .post('http://127.0.0.1:8000/testApp/user/authenticate/', { username:username.value, password:password.value })
+        .post(`${import.meta.env.VITE_API_URL}/testApp/user/authenticate`, { username:username.value, password:password.value })
         .then(response => {
             localStorage.setItem("token", response.data.token),
             router.back()

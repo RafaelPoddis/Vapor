@@ -29,7 +29,7 @@
         </div>
         <div class="container">
           <label class="titles" for="price">Price</label>
-          <textarea required class="text-box" v-model="gamePrice" id="price" placeholder="R$ 0,00" rows="1"></textarea>
+          <textarea required class="text-box" v-model="gamePrice" id="price" placeholder="R$ 0.00" rows="1"></textarea>
         </div>
         <div>
           <p class="titles">Content Rating</p>
@@ -101,13 +101,13 @@ const selectedGenres = ref([])
 
 onMounted(() => {
   axios
-    .get('http://127.0.0.1:8000/testApp/genres/')
+    .get(`${import.meta.env.VITE_API_URL}/testApp/genres`)
     .then(response => {gameGenres.value = response.data, console.log(response.data)})
 })
 
 function postGame(){
   axios
-    .post('http://127.0.0.1:8000/testApp/games/', {name:gameName.value, price:gamePrice.value, description:gameDescription.value, genre_ids:selectedGenres.value, isAdults:isAdults.value})
+    .post(`${import.meta.env.VITE_API_URL}/testApp/games`, {name:gameName.value, price:gamePrice.value, description:gameDescription.value, genre_ids:selectedGenres.value, isAdults:isAdults.value})
     .catch(error => console.log(error))
 }
 </script>

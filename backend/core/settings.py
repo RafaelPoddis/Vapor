@@ -108,7 +108,7 @@ DATABASES = {
         "NAME": "vapordb",
         "USER": "postgres",
         "PASSWORD": "pastel123",
-        "HOST": "127.0.0.1",
+        "HOST": "db",
         "PORT": "5432",
     }
 }

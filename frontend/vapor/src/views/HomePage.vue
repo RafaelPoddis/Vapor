@@ -23,7 +23,7 @@
     :id="game.id"
     :description="game.description"/>
   </div>
-  <Footer/>
+  <!-- <Footer/> -->
 </template>
 
 <script setup>
@@ -36,10 +36,10 @@ import axios from 'axios'
 const games = ref([])
 
 onMounted(() => {
-  axios
-    .get('http://127.0.0.1:8000/testApp/games')
-    .then(response => {games.value = response.data});
   document.title = "STORE";
+  axios
+    .get(`${import.meta.env.VITE_API_URL}/testApp/games`)
+    .then(response => {games.value = response.data});
 })
 
 defineProps({

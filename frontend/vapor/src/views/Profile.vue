@@ -46,7 +46,7 @@ const userId = route.params.id
 //         const userId = auth.getUserId();
 
 //         axios
-//             .get(`http://127.0.0.1:8000/testApp/user/${userId}`, {
+//             .get(`${import.meta.env.VITE_API_URL}/testApp/user/${userId}`, {
 //                 headers: { 'Authorization': `Token ${auth.getToken()}` }
 //             })
 //             .then(response => {

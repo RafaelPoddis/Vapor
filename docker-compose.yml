@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: vapor_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=1
+      - DB_NAME=vapordb
+      - DB_USER=postgres
+      - DB_PASSWORD=pastel123
+      - DB_HOST=db
+      - DB_PORT=5432
+
+  frontend:
+    build: ./frontend/vapor
+    container_name: vapor_frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173" # ou 8080, dependendo do Vue
+    command: npm run dev
+
+  db:
+    image: postgres:17
+    container_name: vapor_db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=vapordb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pastel123
+
+volumes:
+  postgres_data:
