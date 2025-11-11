@@ -36,7 +36,7 @@ import axios from 'axios'
 const games = ref([])
 
 onMounted(() => {
-  document.title = "STORE";
+  document.title = "STORE - Home";
   axios
     .get(`${import.meta.env.VITE_API_URL}/testApp/games`)
     .then(response => {games.value = response.data});
