@@ -35,13 +35,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import GameInfo from '../components/GameInfo.vue'
 import GameImage from '@/assets/gamesImgs/gow.jpg'
 import LibraryGameCard from '@/components/LibraryGameCard.vue'
 
 const gameSelected = ref(false)
 const selectedGame = ref(null)
+
+onMounted(() => {
+  document.title = "LIBRARY";
+})
 
 defineProps({
   achievements: Number,
@@ -62,11 +66,13 @@ const games = ref([
 function selectGame(game) {
   selectedGame.value = game
   gameSelected.value = true
+  document.title = `LIBRARY - ${selectedGame.value.name}`;
 }
 
 function deselectGame() {
   selectedGame.value = null
   gameSelected.value = false
+  document.title = "LIBRARY";
 }
 
 </script>
