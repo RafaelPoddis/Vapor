@@ -34,6 +34,9 @@ const user = ref()
 const route = useRoute()
 const userId = route.params.id
 
+onMounted(() => {
+  document.title = "PROFILE";
+})
 // onMounted(() => {
 //     if (!auth.isLoggedIn()) {
 //         // Temporário: fazer login automático para desenvolvimento

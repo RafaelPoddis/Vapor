@@ -18,13 +18,14 @@
             v-model="selectedGenres"
             :options="gameGenres"
             :multiple="true"
-            :taggable="true"
+            :taggable="false"
             placeholder="Browse Genres"
             label="name"
             track-by="name"
             :searchable="true"
-            :clear-on-select="false"
+            :clear-on-select="true"
             :preserve-search="true"
+            :close-on-select="false"
           />
         </div>
         <div class="container">
@@ -100,6 +101,7 @@ const gameGenres = ref([])
 const selectedGenres = ref([])
 
 onMounted(() => {
+  document.title = "STORE - Upload";
   axios
     .get(`${import.meta.env.VITE_API_URL}/testApp/genres`)
     .then(response => {gameGenres.value = response.data, console.log(response.data)})

@@ -41,6 +41,10 @@ const hasAcc = ref(true)
 const username = ref('')
 const password = ref('')
 
+onMounted(() => {
+  document.title = "LOGIN";
+})
+
 function handleLogin() {
     console.log("entrou")
     axios
