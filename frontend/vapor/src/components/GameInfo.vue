@@ -1,5 +1,5 @@
 <template>
-    <div class="general">
+    <main>
         <img class="cover-img" :src="GameImage">
         <div class="game-detail">
           <h1>{{ name }}</h1>
@@ -19,7 +19,7 @@
               </svg>
             </i>PLAY</button>
         </div>
-    </div>
+      </main>
 </template>
 
 <script setup>
@@ -32,9 +32,10 @@ defineProps({
 </script>
 
 <style scoped>
-.general{
+main{
     display: flex;
     flex-direction: column;
+    margin-top: 25px;
 }
 
 .cover-img{

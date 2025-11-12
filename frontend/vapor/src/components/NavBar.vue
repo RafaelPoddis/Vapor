@@ -10,8 +10,9 @@
 <style scoped>
 .navigation{
   display: flex;
+  margin-top: 140px;
   margin-inline: 640px;
-  margin-block: 40px;
+  margin-bottom: 40px;
   width: 640px;
   height: 35px;
   background-image: radial-gradient(#679FFF, #2C5192);

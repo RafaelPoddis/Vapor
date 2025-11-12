@@ -22,8 +22,10 @@ import logo from "@/assets/logo.svg";
 <style scoped>
 .top {
   display: flex;
-  /* position: fixed;
-  top: 0; */
+  /* Fixo no topo */
+  position: fixed;
+  top: 0;
+
   background-color: #171d25;
   height: 100px;
   width: 100%;

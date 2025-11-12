@@ -81,6 +81,7 @@ function deselectGame() {
 .general{
   display: flex;
   max-width: 1900px;
+  margin-top: 100px;
 }
 
 .game-list{
@@ -91,7 +92,7 @@ function deselectGame() {
 }
 
 .content{
-  margin-left: 25px;
+  margin-inline: 25px;
 }
 
 .games{

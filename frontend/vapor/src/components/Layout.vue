@@ -9,3 +9,7 @@ import Header from "./Header.vue";
   <Header/>
   <router-view/>
 </template>
+
+<style scoped>
+
+</style>
