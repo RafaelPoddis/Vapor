@@ -22,6 +22,9 @@ const routes = [
       {
         path: 'uploadGame',
         name: 'UploadGame',
+        meta: {
+          requiresAuth: true
+        },
         component: UploadGame
       },
       {
@@ -44,6 +47,9 @@ const routes = [
       {
         path: '',
         name: 'Library',
+        meta: {
+          requiresAuth: true
+        },
         component: Library
       },
     ]
@@ -68,15 +74,34 @@ const routes = [
       {
         path: '',
         name: Profile,
+        meta: {
+          requiresAuth: true
+        },
         component: Profile,
       },
     ]
   }
 ]
 
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token');
+    if (token){
+      next();
+    }
+    else{
+      next('/login');
+    }
+  }
+  else{
+    next();
+  }
 })
 
 export default router

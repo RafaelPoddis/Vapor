@@ -27,7 +27,7 @@ import Avatar from '@/assets/userimgs/avatar_test.png'
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 
-const logged = ref(true)
+const logged = ref(false)
 
 const user = ref()
 
