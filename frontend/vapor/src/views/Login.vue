@@ -18,7 +18,7 @@
                     </div>
                     <button class="login-btn" type="submit">Login</button>
                 </div>
-                <div class="content">
+                <div class="newContent">
                     <p class="newAcc">New to Vapor?</p>
                     <a href="#" class="createAcc">Create an account</a>
                 </div>
@@ -46,13 +46,13 @@ onMounted(() => {
 })
 
 function handleLogin() {
-    console.log("entrou")
     axios
-        .post(`${import.meta.env.VITE_API_URL}/testApp/user/authenticate`, { username:username.value, password:password.value })
-        .then(response => {
-            localStorage.setItem("token", response.data.token),
-            router.back()
-        })
+    .post(`${import.meta.env.VITE_API_URL}/testApp/user/authenticate/`, { username:username.value, password:password.value })
+    .then(response => {
+        console.log("entrou")
+        localStorage.setItem("token", response.data.token),
+        router.back()
+    })
 }
 </script>
 
@@ -60,11 +60,9 @@ function handleLogin() {
 .general {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
     margin-top: 100px;
-    /* height: 100vh; */
 }
 
 .title {
@@ -87,11 +85,25 @@ function handleLogin() {
     align-items: center;
     flex-direction: column;
     gap: 25px;
-    width: 130%;
-    border: 1px solid;
+    width: 400px;
+    border: 1px solid #2b617c;
     border-radius: 8px;
+    box-sizing: border-box;
     background-color: #1B2838;
-    border-color: #2b617c;
+    padding-block: 4%;
+}
+
+.newContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    border: 1px solid #2b617c;
+    background-color: #1B2838;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 15px;
+    padding-block: 3%;
 }
 
 .container {

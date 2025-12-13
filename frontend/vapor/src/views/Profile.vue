@@ -1,6 +1,6 @@
 <template>
     <div class="general">
-        <div class="profile" v-if="logged">
+        <div class="profile">
             <div class="main-info">
                 <img alt="User Avatar" class="user-avatar" :src="Avatar" width="200" height="200" />
                 <div class="info">
@@ -15,9 +15,6 @@
                 </div>
             </div>
         </div>
-        <div class="profile" v-else>
-            <p>Not logged</p>
-        </div>
     </div>
 </template>
 
@@ -27,8 +24,6 @@ import Avatar from '@/assets/userimgs/avatar_test.png'
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 
-const logged = ref(false)
-
 const user = ref()
 
 const route = useRoute()
@@ -37,30 +32,6 @@ const userId = route.params.id
 onMounted(() => {
   document.title = "PROFILE";
 })
-// onMounted(() => {
-//     if (!auth.isLoggedIn()) {
-//         // Temporário: fazer login automático para desenvolvimento
-//         auth.login('123', '648a4b0e40fe9e02f1a091d24f395bc5be780516');
-//     }
-
-//     logged.value = auth.isLoggedIn();
-
-//     if (logged.value) {
-//         const userId = auth.getUserId();
-
-//         axios
-//             .get(`${import.meta.env.VITE_API_URL}/testApp/user/${userId}`, {
-//                 headers: { 'Authorization': `Token ${auth.getToken()}` }
-//             })
-//             .then(response => {
-//                 user.value = response.data;
-//             })
-//             .catch(error => {
-//                 console.error("Erro ao buscar usuário:", error);
-//                 logged.value = false;
-//             });
-//     }
-// })
 </script>
 
 <style scoped>
