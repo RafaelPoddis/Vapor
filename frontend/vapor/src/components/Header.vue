@@ -1,5 +1,5 @@
 <template>
-  <header class="top">
+  <header>
     <div class="brand">
       <img alt="Vapor Logo" class="logo" :src="logo" width="55" height="55">
       <router-link to="/store" class="title">VAPOR</router-link>
@@ -20,7 +20,7 @@ import logo from "@/assets/logo.svg";
 </script>
 
 <style scoped>
-.top {
+header {
   display: flex;
   /* Fixo no topo */
   position: fixed;

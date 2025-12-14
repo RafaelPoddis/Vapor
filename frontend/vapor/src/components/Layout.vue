@@ -1,5 +1,6 @@
 <script setup>
 import Header from "./Header.vue";
+import Footer from "./Footer.vue";
 
 </script>
 
@@ -8,6 +9,7 @@ import Header from "./Header.vue";
   <link href="https://fonts.googleapis.com/css?family=Stalinist One" rel="stylesheet" />
   <Header/>
   <router-view/>
+  <Footer/>
 </template>
 
 <style scoped>
