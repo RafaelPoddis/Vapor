@@ -1,6 +1,10 @@
 @import './base.css';
 
 #app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
   margin: 0 auto;
   padding: 0rem;
   font-weight: normal;

@@ -11,10 +11,9 @@ import logo from "@/assets/valvulalogo.png";
 <style scoped>
 footer {
     background-color: #171d25;
-    height: 125px;
+    height: 100px;
     display: flex;
-    position: fixed;
-    bottom: 0;
     width: 100%;
+    padding-inline: 2rem;
 }
 </style>
