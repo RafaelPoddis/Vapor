@@ -1,14 +1,14 @@
 <template>
     <main>
         <div class="profile" v-if="!editMode">
-            <div class="main-info">
+            <div class="main-info" v-if="user">
                 <img alt="User Avatar" class="user-avatar" :src="Avatar" width="200" height="200" />
                 <div class="info">
-                    <h2>Username</h2>
-                    <textarea class="text-info" disabled cols="50" rows="4">{{ profileInfo }}</textarea>
+                    <h2>{{ user.username }}</h2>
+                    <textarea class="text-info" disabled cols="50" rows="4">{{ user.about }}</textarea>
                 </div>
                 <div class="level">
-                    <h2>Level 600</h2>
+                    <h2>Level {{ user.level }}</h2>
                     <button id="editBtn" @click="editMode=true">Edit Profile</button>
                 </div>
             </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="editableContent">
                 <div class="buttons">
-                    <button class="botoes">Teste</button>
+                    <button class="botoes">General</button>
                     <button class="botoes">Teste</button>
                     <button class="botoes">Teste</button>
                     <button class="botoes">Teste</button>
@@ -34,7 +34,16 @@
                     <!-- Só pra separar -->
                 </div>
                 <div>
-                    alguma coisa
+                    <h1>General</h1>
+                    <div class="info-group">
+                        <label for="nickname">Nickname</label>
+                        <input type="text" id="nickname" name="nickname" v-model="username"/>
+                    </div>
+                    <div class="info-group">
+                        <label for="about">About</label>
+                        <textarea id="about" name="about" cols="50" rows="4" v-model="about"></textarea>
+                    </div>
+                    <button id="editBtn" @click="saveProfile">Save Changes</button>
                 </div>
             </div>
 
@@ -50,18 +59,64 @@ import { useRoute } from 'vue-router';
 
 const profileInfo = ref('');
 
-const editMode = ref(true);
+const editMode = ref(false);
 
-const user = ref()
-const route = useRoute()
-const userId = route.params.id
+const user = ref(null)
+const username = ref('');
+const about = ref('');
 
 onMounted(() => {
     document.title = "PROFILE";
-    const info = localStorage.getItem("profileInfo");
-    if (info) {
-        profileInfo.value = info;
-    }
+    // console.log("Fetching profile for user ID:", userId.value);
+    axios
+        .get(`${import.meta.env.VITE_API_URL}/testApp/authenticateduser/`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`
+            }
+        })
+        .then((response) => {user.value = response.data
+            username.value = response.data.username
+            about.value = response.data.about
+        })
+        .catch((error) => {
+            console.error("There was an error fetching the user data:", error);
+        });
+})
+
+function saveProfile() {
+    // Lógica para salvar as alterações do perfil
+    axios
+        .put(`${import.meta.env.VITE_API_URL}/testApp/user/${user.value.id}/`, {
+            username: username.value,
+            about: about.value,
+        },
+        {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`
+            }
+        })
+        .then((response) => {
+            console.log("Profile updated successfully:", response.data)
+        })
+        .catch((error) => {
+            console.error("There was an error updating the profile:", error.response.data);
+        });
+    editMode.value = false;
+}
+
+defineProps({
+    username: {
+        type: String,
+        default: 'Username'
+    },
+    level: {
+        type: Number,
+        default: 1
+    },
+    about: {
+        type: String,
+        default: ''
+    },
 })
 </script>
 
@@ -174,5 +229,19 @@ textarea{
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
     margin-inline: 2rem;
+}
+
+.info-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+textarea, input {
+    background-color: #3a3a3a;
+    color: white;
+    border: 1px solid #5f5f5f;
+    border-radius: 5px;
+    resize: none;
 }
 </style>
