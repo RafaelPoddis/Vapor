@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 # Create your views here.
@@ -197,19 +198,11 @@ class UserView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class AuthenticatedUserView(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
-    # def get(self, request):
-    #     serializer = UserSerializer(request.user)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
-    # ^^^ Outra forma de fazer ^^^
-    
     def get(self, request):
-        user = request.user
-        if user.is_authenticated:
-            serializer = UserSerializer(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({"error": "User is not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 class GenresViews(APIView):
     def post(self, request):

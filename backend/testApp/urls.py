@@ -25,7 +25,7 @@ urlpatterns = [
     path("user/<str:id>/", views.UserView.as_view(), name="updateUser"), # Atualizar dados de usuario
     path("user/<str:id>/", views.UserView.as_view(), name="deleteUser"), # Atualizar dados de usuario
     path("users/", views.GetAllUsers.as_view(), name="allUser"), # Ver todos os usuarios
-    path("user/me/", views.AuthenticatedUserView.as_view(), name="readMe"), # Ver dados do usuario autenticado
+    path("authenticateduser/", views.AuthenticatedUserView.as_view(), name="readMe"), # Ver dados do usuario autenticado
     # Genres #
     path("genres/", views.GenresViews.as_view(), name="createGenres"), # Criar gênero
     path("genres/", views.GenresViews.as_view(), name="readGenres"), # Ler gênero
