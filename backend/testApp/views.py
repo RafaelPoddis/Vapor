@@ -176,18 +176,12 @@ class UserView(APIView):
         
     def put(self, request, id):
         user = get_object_or_404(User, id=id)
-
-        # Verifica se o request contém um arquivo de imagem
-        avatar = request.FILES.get("avatar")
-        if avatar:
-            user.avatar = avatar
         
         serializer = UserSerializer(user, data=request.data, partial=True)
 
         if serializer.is_valid():
             if "password" in request.data:
                 user.set_password(request.data["password"])
-            user.save()
             serializer.save()
             return Response({"message: Account data changed successfully!"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
