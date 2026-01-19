@@ -135,25 +135,31 @@ function changeWindow(event) {
 }
 
 function handleFiles(files) {
-    if (!files || !files.length) return;
+  if (!files || !files.length) {
+    // console.warn("Nenhum arquivo recebido:", files);
+    return;
+  }
 
-    if (!file.type.startsWith("image/")) {
-        alert("Only images are allowed.");
-        return;
+  const file = files[0];
+
+  if (!file || !file.type) {
+    // console.warn("Arquivo inválido:", file);
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+    alert("Só imagens são permitidas");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("avatar", file);
+
+  axios.put(`${import.meta.env.VITE_API_URL}/testApp/user/${user.value.id}/`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data"
     }
-
-    const formData = new FormData();
-    formData.append("avatar", file);
-
-    axios.put(`${import.meta.env.VITE_API_URL}/testApp/user/${user.value.id}/`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    });
-
-
-    const file = files[0];
-    console.log(file);
+  });
 }
 
 function handleDrop(event) {
